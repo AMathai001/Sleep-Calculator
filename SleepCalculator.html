@@ -1,0 +1,36 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sleep Calculator</title>
+</head>
+<body>
+    <h1>Sleep Calculator</h1>
+    <form>
+        <label for="bedtime">Bedtime:</label>
+        <input type="time" id="bedtime" required><br><br>
+        <label for="waketime">Wake-up Time:</label>
+        <input type="time" id="waketime" required><br><br>
+        <input type="submit" value="Calculate">
+    </form>
+    <p id="output"></p>
+
+    <script>
+        const form = document.querySelector('form');
+        const output = document.querySelector('#output');
+
+        form.addEventListener('submit', event => {
+            event.preventDefault();
+            const bedtime = new Date(`01/01/2000 ${form.bedtime.value}`);
+            const waketime = new Date(`01/01/2000 ${form.waketime.value}`);
+            if (waketime < bedtime) {
+                waketime.setDate(waketime.getDate() + 1);
+            }
+            const sleepTime = waketime - bedtime;
+            const hours = Math.floor(sleepTime / 1000 / 60 / 60);
+            const minutes = Math.floor((sleepTime - (hours * 1000 * 60 * 60)) / 1000 / 60);
+            output.textContent = `You slept for ${hours} hours and ${minutes} minutes.`;
+        });
+    </script>
+</body>
+</html>
